@@ -1,196 +1,471 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I'm Sorry ❤️</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I'm Sorry 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Dancing Script', cursive;
-            background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+    :root {
+      --rose:    #e8436f;
+      --deep:    #c0375a;
+      --blush:   #ffd6e0;
+      --petal:   #fff0f5;
+      --cream:   #fffaf8;
+      --muted:   #d06080;
+      --light:   #f0a0bb;
+    }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    body {
+      font-family: 'Lato', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fff0f5 0%, #ffe4e8 50%, #ffd6e0 100%);
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        .hearts-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+    /* ── FLOATING HEARTS BACKGROUND ── */
+    .heart-bg {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .fheart {
+      position: absolute;
+      bottom: -60px;
+      animation: floatUp linear infinite;
+      opacity: 0;
+      user-select: none;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(-15deg) scale(0.8); opacity: 0; }
+      10%  { opacity: 0.65; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-115vh) rotate(20deg) scale(1.2); opacity: 0; }
+    }
 
-        .heart {
-            position: absolute;
-            font-size: 20px;
-            color: rgba(255, 255, 255, 0.8);
-            animation: float 6s ease-in-out infinite;
-        }
+    /* ── PAGES ── */
+    .page {
+      display: none;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 2rem 1.2rem;
+      text-align: center;
+    }
+    .page.active { display: flex; }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-        }
+    /* ── CARD ── */
+    .card {
+      background: rgba(255,255,255,0.84);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 32px;
+      padding: 3rem 3.5rem;
+      max-width: 500px;
+      width: 100%;
+      border: 1.5px solid rgba(255,150,180,0.35);
+      box-shadow:
+        0 8px 48px rgba(220,80,120,0.14),
+        0 2px 12px rgba(220,80,120,0.07),
+        inset 0 0 40px rgba(255,200,220,0.08);
+      animation: cardIn 0.9s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes cardIn {
+      0%   { opacity: 0; transform: scale(0.78) translateY(30px); }
+      80%  { transform: scale(1.03) translateY(-4px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
 
-        .content {
-            text-align: center;
-            z-index: 2;
-            position: relative;
-            animation: pulse 2s ease-in-out infinite;
-        }
+    /* ── BIG EMOJI ── */
+    .big-emoji {
+      font-size: 4.2rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.18); }
+    }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+    /* ── TYPOGRAPHY ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      color: var(--deep);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+      text-shadow: 0 1px 10px rgba(192,55,90,0.1);
+    }
+    .subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+      font-style: italic;
+    }
+    .body-text {
+      color: #c07090;
+      font-size: 0.97rem;
+      margin-bottom: 2rem;
+      line-height: 1.75;
+    }
 
-        h1 {
-            font-size: 4rem;
-            color: white;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
+    /* ── BUTTONS ── */
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
-        }
+    .btn-yes {
+      background: linear-gradient(135deg, var(--rose), var(--deep));
+      color: #fff;
+      border: none;
+      padding: 0.85rem 2.1rem;
+      border-radius: 50px;
+      font-size: 1.08rem;
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(220,80,120,0.38);
+      transition: transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-yes:hover  { transform: scale(1.08); box-shadow: 0 6px 28px rgba(220,80,120,0.52); }
+    .btn-yes:active { transform: scale(0.97); }
 
-        p {
-            font-size: 1.8rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
+    .btn-no-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .btn-no {
+      background: rgba(255,255,255,0.5);
+      color: var(--deep);
+      border: 1.5px solid var(--light);
+      padding: 0.85rem 2.1rem;
+      border-radius: 50px;
+      font-size: 1.08rem;
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+      transition: transform 0.28s cubic-bezier(.34,1.56,.64,1);
+      position: relative;
+    }
 
-        .forgive-btn {
-            background: linear-gradient(45deg, #ff6b9d, #c44569);
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            font-family: 'Dancing Script', cursive;
-            font-weight: 700;
-        }
+    /* tooltip above No button */
+    .tooltip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--petal);
+      border: 1px solid var(--light);
+      color: var(--deep);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      box-shadow: 0 2px 10px rgba(200,80,110,0.14);
+    }
+    .tooltip.show { opacity: 1; }
 
-        .forgive-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
-        }
+    /* ── FORGIVEN PAGE ── */
+    #page-forgiven {
+      animation: fadeIn 0.7s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-        .forgive-btn:active {
-            transform: translateY(-2px);
-        }
+    .forgiven-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 36px;
+      padding: 3rem 3rem 2.5rem;
+      max-width: 560px;
+      width: 100%;
+      box-shadow:
+        0 10px 60px rgba(220,80,120,0.22),
+        0 2px 14px rgba(220,80,120,0.08);
+      border: 1.5px solid rgba(255,150,180,0.45);
+      animation: cardIn 0.8s cubic-bezier(.34,1.56,.64,1) both;
+    }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            p { font-size: 1.2rem; }
-        }
-    </style>
+    .explosion-emoji {
+      font-size: 3.8rem;
+      display: block;
+      margin-bottom: 0.4rem;
+      animation: spinIn 0.7s ease both;
+    }
+    @keyframes spinIn {
+      0%   { transform: rotate(-25deg) scale(0.4); opacity: 0; }
+      100% { transform: rotate(0deg) scale(1); opacity: 1; }
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      color: var(--deep);
+      margin: 0.5rem 0;
+    }
+    .sweet-msg {
+      font-size: 0.98rem;
+      color: var(--muted);
+      margin: 1rem 0 1.5rem;
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    hr.divider {
+      border: none;
+      border-top: 1px dashed rgba(220,120,150,0.3);
+      margin: 1.4rem 0;
+    }
+
+    /* gift grid */
+    .gifts {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1.4rem 0;
+    }
+    .gift-item {
+      background: linear-gradient(135deg, var(--petal), #ffe4ee);
+      border: 1.5px solid rgba(255,150,180,0.4);
+      border-radius: 22px;
+      padding: 1rem 1.3rem;
+      min-width: 100px;
+      box-shadow: 0 2px 12px rgba(220,80,120,0.09);
+      animation: giftPop 0.6s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    .gift-item:nth-child(1) { animation-delay: 0.15s; }
+    .gift-item:nth-child(2) { animation-delay: 0.30s; }
+    .gift-item:nth-child(3) { animation-delay: 0.45s; }
+    .gift-item:nth-child(4) { animation-delay: 0.60s; }
+    @keyframes giftPop {
+      0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
+      80%  { transform: scale(1.08); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .gift-emoji  { font-size: 2.2rem; display: block; margin-bottom: 4px; }
+    .gift-label  { font-size: 0.72rem; color: var(--deep); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .hearts-burst {
+      font-size: 1.6rem;
+      letter-spacing: 0.35rem;
+      display: block;
+      margin-top: 0.6rem;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    .closing-note {
+      font-size: 0.84rem;
+      color: #d08090;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* confetti */
+    .confetti-piece {
+      position: fixed;
+      pointer-events: none;
+      animation: confettiFall linear both;
+      z-index: 999;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg) scale(0.4); opacity: 0; }
+    }
+
+    /* responsive */
+    @media (max-width: 480px) {
+      .card, .forgiven-card { padding: 2rem 1.5rem; }
+      h1, h2 { font-size: 1.7rem; }
+      .big-emoji, .explosion-emoji { font-size: 3rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="hearts-container" id="heartsContainer"></div>
-    
-    <div class="content">
-        <h1>I'm So Sorry ❤️💔</h1>
-        <p>Please forgive me... I never meant to hurt you. You mean everything to me.</p>
-        <button class="forgive-btn" onclick="forgive()">💕 I Forgive You 💕</button>
+
+<!-- Floating hearts background -->
+<div class="heart-bg" id="heartBg"></div>
+
+<!-- ══════════════════════════════
+     PAGE 1 — HOME
+════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <div class="card">
+    <span class="big-emoji">🥺</span>
+    <h1>I'm really sorry…</h1>
+    <p class="subtitle">Will you please forgive me? 🌸</p>
+    <p class="body-text">
+      I know I messed up, and I hate seeing you upset.<br>
+      You mean <em>everything</em> to me. Truly. 💝
+    </p>
+
+    <div class="btn-row">
+      <!-- YES button -->
+      <button class="btn-yes" onclick="goForgiven()">I forgive you ❤️</button>
+
+      <!-- NO button (runs away) -->
+      <div class="btn-no-wrap">
+        <div class="tooltip" id="tooltip">Are you <em>really</em> sure? 😏</div>
+        <button class="btn-no" id="btnNo"
+          onmousemove="runAway(event)"
+          ontouchmove="runAway(event)">No 😒</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 2 — FORGIVEN
+════════════════════════════════ -->
+<div class="page" id="page-forgiven">
+  <div class="forgiven-card">
+    <span class="explosion-emoji">🎉</span>
+    <h2>You just made my day! 💖</h2>
+    <p class="sweet-msg">
+      Thank you for your kindness and your beautiful heart.<br>
+      I promise to always make it up to you. 🌹
+    </p>
+
+    <hr class="divider"/>
+
+    <div class="gifts">
+      <div class="gift-item">
+        <span class="gift-emoji">🌸</span>
+        <span class="gift-label">Flowers</span>
+      </div>
+      <div class="gift-item">
+        <span class="gift-emoji">🍫</span>
+        <span class="gift-label">Chocolates</span>
+      </div>
+      <div class="gift-item">
+        <span class="gift-emoji">🌹</span>
+        <span class="gift-label">Roses</span>
+      </div>
+      <div class="gift-item">
+        <span class="gift-emoji">🧸</span>
+        <span class="gift-label">Cuddles</span>
+      </div>
     </div>
 
-    <script>
-        // Create floating hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '💖';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
-            
-            document.getElementById('heartsContainer').appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 7000);
-        }
+    <span class="hearts-burst">💕 💗 💖 💕</span>
+    <p class="closing-note">You're the most wonderful person in the world ✨</p>
+  </div>
+</div>
 
-        // Generate hearts continuously
-        setInterval(createHeart, 300);
+<script>
+  /* ── Spawn floating background hearts ── */
+  (function spawnHearts(count) {
+    const container = document.getElementById('heartBg');
+    const pool = ['💗','💕','💖','🌸','✨','🌹','💞','🌺'];
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'fheart';
+      el.textContent = pool[i % pool.length];
+      el.style.left            = (Math.random() * 95) + '%';
+      el.style.fontSize         = (0.9 + Math.random() * 1.3) + 'rem';
+      el.style.animationDuration = (7 + Math.random() * 10) + 's';
+      el.style.animationDelay   = (Math.random() * 10) + 's';
+      container.appendChild(el);
+    }
+  })(20);
 
-        // Forgiveness function
-        function forgive() {
-            const btn = document.querySelector('.forgive-btn');
-            btn.innerHTML = '😍 Thank You! 😍';
-            btn.style.background = 'linear-gradient(45deg, #00b894, #00cec9)';
-            
-            // Explosion of hearts
-            for(let i = 0; i < 50; i++) {
-                setTimeout(() => createExplosionHeart(), i * 50);
-            }
-        }
+  /* ── "No" button escape logic ── */
+  let noOffX = 0, noOffY = 0, hoverCount = 0;
+  const btnNo  = document.getElementById('btnNo');
+  const tooltip = document.getElementById('tooltip');
+  const taunts = [
+    'Are you <em>really</em> sure? 😏',
+    'Hmm, think again… 🥺',
+    'That cannot be right! 💔',
+    'My heart! 😭',
+    'Okay fine… just kidding, run! 💨',
+    'Nice try! 😂'
+  ];
 
-        function createExplosionHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '💕';
-            heart.style.position = 'fixed';
-            heart.style.left = '50%';
-            heart.style.top = '50%';
-            heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            
-            document.body.appendChild(heart);
-            
-            const angle = (Math.PI * 2 * Math.random());
-            const velocity = 200 + Math.random() * 200;
-            const vx = Math.cos(angle) * velocity;
-            const vy = Math.sin(angle) * velocity;
-            
-            let x = 0;
-            let y = 0;
-            const anim = () => {
-                x += vx * 0.01;
-                y += vy * 0.01;
-                heart.style.transform = `translate(${x}px, ${y}px)`;
-                heart.style.opacity = 1 - (Math.abs(y) / 300);
-                
-                if (Math.abs(y) < 300) {
-                    requestAnimationFrame(anim);
-                } else {
-                    heart.remove();
-                }
-            };
-            anim();
-        }
-    </script>
+  function runAway(e) {
+    const cx = e.clientX ?? e.touches?.[0]?.clientX;
+    const cy = e.clientY ?? e.touches?.[0]?.clientY;
+    if (cx == null) return;
+
+    const rect  = btnNo.getBoundingClientRect();
+    const btnCX = rect.left + rect.width  / 2;
+    const btnCY = rect.top  + rect.height / 2;
+    const dx    = btnCX - cx;
+    const dy    = btnCY - cy;
+    const dist  = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist > 130) { tooltip.classList.remove('show'); return; }
+
+    const angle = Math.atan2(dy, dx);
+    const flee  = 90 + Math.random() * 50;
+    noOffX = Math.max(-110, Math.min(110, noOffX + Math.cos(angle) * flee));
+    noOffY = Math.max(-70,  Math.min(70,  noOffY + Math.sin(angle) * flee));
+
+    btnNo.style.transform = `translate(${noOffX}px, ${noOffY}px)`;
+    tooltip.innerHTML = taunts[Math.min(hoverCount, taunts.length - 1)];
+    tooltip.classList.add('show');
+    hoverCount++;
+  }
+
+  /* ── Switch to forgiven page ── */
+  function goForgiven() {
+    document.getElementById('page-home').classList.remove('active');
+    document.getElementById('page-forgiven').classList.add('active');
+    launchConfetti(70);
+    extraHearts(10);
+  }
+
+  /* ── Confetti burst ── */
+  function launchConfetti(count) {
+    const palette = ['#ff6b9d','#ff85a1','#ffc1d4','#e94560','#ffb347','#b5ead7','#ffdac1','#c9b1ff'];
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      const size = 7 + Math.random() * 11;
+      Object.assign(el.style, {
+        left:             (Math.random() * 100) + 'vw',
+        top:              '-20px',
+        width:            size + 'px',
+        height:           size + 'px',
+        borderRadius:     Math.random() > 0.5 ? '50%' : '3px',
+        background:       palette[Math.floor(Math.random() * palette.length)],
+        animationDuration: (2 + Math.random() * 2.5) + 's',
+        animationDelay:   (Math.random() * 1.2) + 's'
+      });
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 5000);
+    }
+  }
+
+  /* ── Bonus hearts on forgiven ── */
+  function extraHearts(count) {
+    const container = document.getElementById('heartBg');
+    const pool = ['💖','💗','🌸','💕','✨'];
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'fheart';
+      el.textContent = pool[i % pool.length];
+      el.style.left             = (Math.random() * 95) + '%';
+      el.style.fontSize          = (1 + Math.random() * 1.6) + 'rem';
+      el.style.animationDuration = (5 + Math.random() * 7) + 's';
+      el.style.animationDelay    = (Math.random() * 3) + 's';
+      container.appendChild(el);
+    }
+  }
+</script>
 </body>
 </html>
